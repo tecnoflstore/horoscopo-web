@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}¿Qué signo soy? Descubre tu signo del zodiaco{% endblock %}
+{% block content %}
+<h1>🔮 ¿Qué signo soy?</h1>
+<p class="sub">Escribe tu fecha de nacimiento y descubre tu signo del zodiaco.</p>
+
+<form method="get" action="/que-signo-soy" class="compat-form">
+  <input type="date" name="fecha" required>
+  <button type="submit">Descubrir mi signo</button>
+</form>
+
+{% if error %}<section><p>{{ error }}</p></section>{% endif %}
+
+{% if slug %}
+{% set s = signos[slug] %}
+<section class="resultado">
+  <p class="total">{{ s.e }}</p>
+  <h2>Eres {{ s.n }}</h2>
+  <p class="sub">{{ s.f }}</p>
+  <p>{{ s.d }}</p>
+  <p><b>Elemento:</b> {{ s.el }} · <b>Planeta:</b> {{ s.p }} · <b>Piedra:</b> {{ s.pi }}</p>
+  <p><b>Fortalezas:</b> {{ s.fort }}</p>
+  <p><b>Retos:</b> {{ s.ret }}</p>
+  <p><b>Más compatibles:</b> {{ s.comp | join(', ') }}</p>
+  <p><a href="/signo/{{ slug }}">Ver mi horóscopo de hoy →</a></p>
+  <p><a href="/signo/{{ slug }}/semana">Ver mi horóscopo de la semana →</a></p>
+</section>
+{% endif %}
+{% endblock %}

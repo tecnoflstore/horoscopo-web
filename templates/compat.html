@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}{% if res %}Compatibilidad {{ signos[a].n }} y {{ signos[b].n }}{% else %}Compatibilidad de signos{% endif %}{% endblock %}
+{% block content %}
+<h1>💞 Compatibilidad de signos</h1>
+<p class="sub">Elige dos signos y descubre qué tan bien se llevan.</p>
+
+<form method="get" action="/compatibilidad" class="compat-form">
+  <select name="a">
+    {% for k, s in signos.items() %}<option value="{{ k }}" {{ 'selected' if k == a }}>{{ s.e }} {{ s.n }}</option>{% endfor %}
+  </select>
+  <span>❤</span>
+  <select name="b">
+    {% for k, s in signos.items() %}<option value="{{ k }}" {{ 'selected' if k == b }}>{{ s.e }} {{ s.n }}</option>{% endfor %}
+  </select>
+  <button type="submit">Ver compatibilidad</button>
+</form>
+
+{% if res %}
+<section class="resultado">
+  <h2>{{ signos[a].e }} {{ signos[a].n }} + {{ signos[b].e }} {{ signos[b].n }}</h2>
+  <p class="total">{{ res.total }}%</p>
+  <p><b>{{ res.nivel }}</b></p>
+  <p>{{ res.texto }}</p>
+  {% for k, v in res.p.items() %}
+  <div class="fila"><span>{{ k }}</span><div class="barra"><i style="width: {{ v }}%"></i></div><b>{{ v }}%</b></div>
+  {% endfor %}
+</section>
+<section>
+  <h2>Sobre esta pareja</h2>
+  <p>{{ signos[a].n }} es de <b>{{ signos[a].el }}</b> y {{ signos[b].n }} es de <b>{{ signos[b].el }}</b>.
+  Fortaleza de {{ signos[a].n }}: {{ signos[a].fort | lower }}. Fortaleza de {{ signos[b].n }}: {{ signos[b].fort | lower }}.</p>
+  <p>Reto de {{ signos[a].n }}: {{ signos[a].ret | lower }}. Reto de {{ signos[b].n }}: {{ signos[b].ret | lower }}.</p>
+  <p><a href="/signo/{{ a }}">Horóscopo de {{ signos[a].n }}</a> · <a href="/signo/{{ b }}">Horóscopo de {{ signos[b].n }}</a></p>
+</section>
+{% endif %}
+{% endblock %}

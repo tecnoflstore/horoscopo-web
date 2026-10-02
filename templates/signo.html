@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% set nombres = {'hoy': 'hoy', 'semana': 'de la semana', 'mes': 'del mes', 'amor': 'en el amor'} %}
+{% block title %}Horóscopo de {{ s.n }} {{ nombres[modo] }}{% endblock %}
+{% block content %}
+<h1>{{ s.e }} {{ s.n }}</h1>
+<p class="sub">{{ s.f }} · {{ rango }}</p>
+<nav class="tabs">
+  <a class="{{ 'on' if modo == 'hoy' }}" href="/signo/{{ slug }}">Hoy</a>
+  <a class="{{ 'on' if modo == 'semana' }}" href="/signo/{{ slug }}/semana">Semana</a>
+  <a class="{{ 'on' if modo == 'mes' }}" href="/signo/{{ slug }}/mes">Mes</a>
+  <a class="{{ 'on' if modo == 'amor' }}" href="/signo/{{ slug }}/amor">Amor ❤️</a>
+</nav>
+<section class="stars">{% for k, v in h.estrellas.items() %}<div>{{ k }} <b>{{ '★' * v }}{{ '☆' * (5 - v) }}</b></div>{% endfor %}</section>
+{% if modo == 'amor' %}
+<section><h2>Tu amor</h2><p>{{ h.amor_largo }}</p></section>
+<section><h2>Mejores parejas</h2><p>Los más compatibles con {{ s.n }} son {{ s.comp | join(', ') }}. Hoy conectas especialmente con <b>{{ h.compatible }}</b>.</p>
+<p><a href="/compatibilidad">Calcula tu compatibilidad →</a></p></section>
+<section><h2>Consejo para el amor</h2><p>{{ h.consejo }}</p></section>
+{% else %}
+<section><h2>General</h2><p>{{ h.general }}</p></section>
+<section><h2>Amor ❤️</h2><p>{{ h.amor }}</p></section>
+<section><h2>Trabajo 💼</h2><p>{{ h.trabajo }}</p></section>
+<section><h2>Dinero 💰</h2><p>{{ h.dinero }}</p></section>
+<section><h2>Salud 🍀</h2><p>{{ h.salud }}</p></section>
+<section><h2>Consejo</h2><p>{{ h.consejo }}</p><p><em>“{{ h.frase }}”</em></p></section>
+<section><h2>Tu suerte</h2>
+<p>Número <b>{{ h.numero }}</b> · Color <b>{{ h.color }}</b> · Hora <b>{{ h.hora }}</b> · Compatible con <b>{{ h.compatible }}</b></p></section>
+{% endif %}
+<section class="compartir">
+  <h2>Comparte tu horóscopo</h2>
+  <a class="btn wa" target="_blank" href="https://wa.me/?text={{ ('Mira el horóscopo de ' ~ s.n ~ ': ' ~ request.url) | urlencode }}">WhatsApp</a>
+  <a class="btn fb" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ request.url | urlencode }}">Facebook</a>
+  <button type="button" onclick="navigator.clipboard.writeText(location.href); this.textContent='¡Enlace copiado!'">Copiar enlace</button>
+</section>
+<section><h2>Sobre {{ s.n }}</h2><p>{{ s.d }}</p>
+<ul><li>Elemento: {{ s.el }}</li><li>Planeta: {{ s.p }}</li><li>Cualidad: {{ s.c }}</li><li>Piedra: {{ s.pi }}</li>
+<li>Fortalezas: {{ s.fort }}</li><li>Retos: {{ s.ret }}</li><li>Más compatibles: {{ s.comp | join(', ') }}</li></ul></section>
+<div class="grid small">{% for k, o in signos.items() %}<a class="card" href="/signo/{{ k }}">{{ o.e }} {{ o.n }}</a>{% endfor %}</div>
+{% endblock %}

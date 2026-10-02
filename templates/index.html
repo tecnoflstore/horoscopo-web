@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Horóscopo de hoy</h1>
+<p class="sub">{{ hoy.strftime('%d/%m/%Y') }} · “{{ frase }}”</p>
+
+<section class="resultado destacado">
+  <h2>⭐ Signo destacado del día</h2>
+  <p class="total">{{ dest.e }}</p>
+  <h2>{{ dest.n }}</h2>
+  <p>{{ dest_h.general }}</p>
+  <p>{% for k, v in dest_h.estrellas.items() %}{{ k }} <b class="oro">{{ '★' * v }}{{ '☆' * (5 - v) }}</b> &nbsp; {% endfor %}</p>
+  <p><a href="/signo/{{ dest_slug }}">Leer el horóscopo completo de {{ dest.n }} →</a></p>
+</section>
+
+<h2>Elige tu signo</h2>
+<div class="grid">
+  {% for slug, s in signos.items() %}
+  <a class="card" href="/signo/{{ slug }}"><span>{{ s.e }}</span>{{ s.n }}<small>{{ s.f }}</small></a>
+  {% endfor %}
+</div>
+
+<h2>Descubre más</h2>
+<div class="grid">
+  <a class="card" href="/compatibilidad"><span>💞</span>Compatibilidad</a>
+  <a class="card" href="/que-signo-soy"><span>🔮</span>¿Qué signo soy?</a>
+</div>
+{% endblock %}

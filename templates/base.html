@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Tu espacio diario de energía{% endblock %}</title>
+  <meta name="description" content="{% block desc %}Horóscopo diario y semanal, compatibilidad de signos y mucho más.{% endblock %}">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header>
+    <a class="logo" href="/">✨ Tu espacio diario</a>
+    <nav class="menu">
+      <a href="/">Horóscopo</a>
+      <a href="/compatibilidad">Compatibilidad</a>
+      <a href="/que-signo-soy">¿Qué signo soy?</a>
+    </nav>
+  </header>
+  <main>{% block content %}{% endblock %}</main>
+  <footer>
+    <p><a href="/contacto">Contacto</a> · <a href="/privacidad">Política de privacidad</a></p>
+    <p>Contenido con fines de entretenimiento.</p>
+  </footer>
+</body>
+</html>
